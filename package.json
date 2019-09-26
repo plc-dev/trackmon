@@ -1,0 +1,19 @@
+{
+  "name": "webscraper",
+  "version": "1.0.0",
+  "description": "web scraper for sparkasse",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --inspect ./server.js 80"
+  },
+  "author": "plc",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "puppeteer": "^1.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
