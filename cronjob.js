@@ -22,6 +22,5 @@ module.exports = async Expense => {
         timezone: "Europe/London",
     });
     task.start();
-    //task.stop();
     return;
 }
