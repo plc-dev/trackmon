@@ -1,42 +1,28 @@
 require('dotenv').config();
-const puppeteer = require('puppeteer');
+const express = require('express');
+const bodyParser = require('body-parser');
+const { performance } = require('perf_hooks');
+const app = express();
 
-const scrapeBookings = (async () => {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+async function main() {
+    const startup = performance.now();
+    console.log(`Server has started at ${Date.now()}.`);
 
-    await page.goto('https://www.kreissparkasse-ravensburg.de/de/home.html');
+    const port = process.env.PORT || 80;
 
-    await page.type('.header-login [type="text"]', process.env.user);
-    await page.type('.header-login [type="password"]', process.env.pass);
+    app.use(bodyParser.json({ limit: "50mb" }));
+    app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 50000 }));
 
-    await page.click('.header-login [type="submit"]');
+    const db = await require('./database/database')();
 
-    // await page.waitFor(1000);
-
-    await page.goto('https://www.kreissparkasse-ravensburg.de/de/home/onlinebanking/umsaetze/umsaetze.html?sp:ct=TUFJTkBwb3J0YWw%253D');
-
-    const data = await page.evaluate(() => {
-        let dataArray = [];
-        const tableRows = document.querySelectorAll('.tableroweven, .tablerowodd');
-        tableRows.forEach(row => {
-            const rowInfo = row.querySelectorAll('.payment span');
-            const dataObject = {
-                info: {},
-                amount: ""
-            };
-            rowInfo.forEach(info => {
-                dataObject.info[info.classList[0]] = info.innerHTML;
-            });
-            dataObject.amount = row.querySelector('.balance .offscreen').innerHTML;
-            dataArray.push(dataObject);
-        });
-        return dataArray;
+    require('http').createServer(app).listen(port, () => {
+        console.log(`server | http server listening on ${port}`);
+        console.log(`Server booted in ${Math.trunc(performance.now()) - startup}ms.`);
     });
 
-    await browser.close();
+    await require('./cronjob')(db.Expense);
+}
 
-    console.log(data);
-
-    return data;
+(async () => {
+    await main();
 })();
