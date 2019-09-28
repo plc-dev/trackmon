@@ -26,7 +26,7 @@ module.exports =  async () => {
                 dataObject.info[info.classList[0]] = info.innerHTML;
             });
             dataObject.amount = row.querySelector('.balance .offscreen').innerHTML;
-            dataArray.push(dataObject);
+            dataArray.unshift(dataObject);
         });
         return dataArray;
     });

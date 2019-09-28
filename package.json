@@ -5,16 +5,21 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
     "dev": "nodemon --inspect ./server.js 80"
   },
   "author": "plc",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^8.1.0",
+    "express": "^4.17.1",
     "node-cron": "^2.0.3",
+    "performance": "^1.1.1",
     "pg": "^7.12.1",
     "puppeteer": "^1.20.0",
-    "sequelize": "^5.19.1"
+    "sequelize": "^5.19.1",
+    "web-push": "^3.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
