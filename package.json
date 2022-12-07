@@ -11,9 +11,9 @@
   "author": "plc",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "dotenv": "^8.1.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "node-cron": "^2.0.3",
     "performance": "^1.1.1",
     "pg": "^7.12.1",
